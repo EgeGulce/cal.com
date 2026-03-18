@@ -1,7 +1,8 @@
 "use client";
 
 import { TrpcProvider } from "app/_trpc/trpc-provider";
-import { SessionProvider } from "next-auth/react";
+import { useEffect } from "react";
+import { SessionProvider, useSession } from "next-auth/react";
 import CacheProvider from "react-inlinesvg/provider";
 import { ToastProvider } from "@coss/ui/components/toast";
 
@@ -11,6 +12,22 @@ import { NotificationSoundHandler } from "@calcom/web/components/notification-so
 import useIsBookingPage from "@lib/hooks/useIsBookingPage";
 
 import { GeoProvider } from "./GeoContext";
+
+function HelpAliveIdentify() {
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session?.user?.id && (window as any).HelpAlive?.identify) {
+      (window as any).HelpAlive.identify({
+        userId: String(session.user.id),
+        tenantId: "cal-com-test",
+        displayName: session.user.name || undefined,
+      });
+    }
+  }, [session?.user?.id, session?.user?.name]);
+
+  return null;
+}
 
 type ProvidersProps = {
   isEmbed: boolean;
@@ -24,6 +41,7 @@ export function Providers({ isEmbed, children, country }: ProvidersProps) {
   return (
     <GeoProvider country={country}>
       <SessionProvider>
+        <HelpAliveIdentify />
         <TrpcProvider>
           <ToastProvider position="bottom-center">
             {!isEmbed && !isBookingPage && <NotificationSoundHandler />}

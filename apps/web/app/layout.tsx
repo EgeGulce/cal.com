@@ -127,6 +127,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             strategy="beforeInteractive"
             data-options='{"activationKey":"Meta+c"}'
           />
+          {/* HelpAlive SDK — behavioral tracking + assist widget */}
+          <Script
+            src="https://cdn.helpalive.com/sdk/helpalive.js"
+            data-api-key="ts_3FZA8N8dYP1L2jrDGTPaLJB1rBT9S9KT"
+          />
         )}
       </head>
       <body
