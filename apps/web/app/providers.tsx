@@ -21,13 +21,16 @@ function HelpAliveIdentify() {
       (window as any).HelpAlive.identify({
         userId: String(session.user.id),
         tenantId: "cal-com-test",
-        displayName: session.user.name || undefined,
+        tenantName: "Cal.com",
+        displayName: session.user.name,
+        email: session.user.email
       });
     }
   }, [session?.user?.id, session?.user?.name]);
 
   return null;
 }
+
 
 type ProvidersProps = {
   isEmbed: boolean;
