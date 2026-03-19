@@ -131,7 +131,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Script
           src="https://cdn.helpalive.com/sdk/helpalive.js"
           data-api-key="ts_3FZA8N8dYP1L2jrDGTPaLJB1rBT9S9KT"
-          data-endpoint="https://YOUR_HELPALIVE_BACKEND.railway.app/api/v1/collect"
         />
       </head>
       <body
