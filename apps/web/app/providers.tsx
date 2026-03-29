@@ -23,7 +23,9 @@ function HelpAliveIdentify() {
         tenantId: "cal-com-test",
         tenantName: "Cal.com",
         displayName: session.user.name,
-        email: session.user.email
+        email: session.user.email,
+        role: session.user.role,
+        plan: session.hasValidLicense ? "enterprise" : "free",
       });
     }
   }, [session?.user?.id, session?.user?.name]);
