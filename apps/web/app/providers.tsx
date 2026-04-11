@@ -26,6 +26,9 @@ function HelpAliveIdentify() {
         email: session.user.email,
         role: session.user.role,
         plan: session.hasValidLicense ? "enterprise" : "free",
+        createdAt: session.user.createdDate
+          ? Math.floor(new Date(session.user.createdDate).getTime() / 1000)
+          : undefined,
       });
     }
   }, [session?.user?.id, session?.user?.name]);

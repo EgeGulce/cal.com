@@ -640,6 +640,7 @@ export const getOptions = ({
             role: true,
             locale: true,
             movedToProfileId: true,
+            createdDate: true,
             teams: {
               include: {
                 team: {
@@ -749,6 +750,7 @@ export const getOptions = ({
           profileId: user.profile?.id ?? token.profileId ?? null,
           upId: user.profile?.upId ?? token.upId ?? null,
           inactiveAdminReason: user.inactiveAdminReason,
+          createdDate: user.createdDate,
         } as JWT;
       }
 
@@ -936,6 +938,7 @@ export const getOptions = ({
           org: token?.org,
           orgAwareUsername: token.orgAwareUsername,
           locale: existingUser.locale,
+          createdDate: existingUser.createdDate,
         } as JWT;
       }
 
@@ -975,6 +978,7 @@ export const getOptions = ({
           org: token?.org,
           locale: token.locale,
           inactiveAdminReason: token.inactiveAdminReason,
+          createdDate: token.createdDate ? new Date(token.createdDate) : undefined,
         },
       };
       return calendsoSession;
