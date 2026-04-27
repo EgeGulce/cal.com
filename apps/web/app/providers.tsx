@@ -3,6 +3,7 @@
 import { TrpcProvider } from "app/_trpc/trpc-provider";
 import { useEffect } from "react";
 import { SessionProvider, useSession } from "next-auth/react";
+import Intercom from "@intercom/messenger-js-sdk";
 import CacheProvider from "react-inlinesvg/provider";
 import { ToastProvider } from "@coss/ui/components/toast";
 
@@ -36,6 +37,27 @@ function HelpAliveIdentify() {
   return null;
 }
 
+function IntercomMessenger() {
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const appId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
+    if (!appId || !session?.user?.id) return;
+
+    Intercom({
+      app_id: appId,
+      user_id: String(session.user.id),
+      name: session.user.name ?? undefined,
+      email: session.user.email ?? undefined,
+      created_at: session.user.createdDate
+        ? Math.floor(new Date(session.user.createdDate).getTime() / 1000)
+        : undefined,
+    });
+  }, [session?.user?.id, session?.user?.name, session?.user?.email]);
+
+  return null;
+}
+
 
 type ProvidersProps = {
   isEmbed: boolean;
@@ -50,6 +72,7 @@ export function Providers({ isEmbed, children, country }: ProvidersProps) {
     <GeoProvider country={country}>
       <SessionProvider>
         <HelpAliveIdentify />
+        {!isEmbed && !isBookingPage && <IntercomMessenger />}
         <TrpcProvider>
           <ToastProvider position="bottom-center">
             {!isEmbed && !isBookingPage && <NotificationSoundHandler />}

@@ -3349,6 +3349,7 @@ __metadata:
     "@googleapis/oauth2": "npm:1.0.7"
     "@hookform/error-message": "npm:2.0.0"
     "@hookform/resolvers": "npm:2.9.7"
+    "@intercom/messenger-js-sdk": "npm:^0.0.19"
     "@microsoft/microsoft-graph-types-beta": "npm:0.15.0-preview"
     "@next-auth/prisma-adapter": "npm:1.0.4"
     "@next/bundle-analyzer": "npm:16.1.5"
@@ -6519,6 +6520,13 @@ __metadata:
     "@types/node":
       optional: true
   checksum: 10/57d113a9db7abc73326491e29bedc88ef362e53779f9f58a1b61225e0be068ce0c54e33cd65f4a13ca46131676fb72c3ef488463c4c9af0aa89680684c55d74c
+  languageName: node
+  linkType: hard
+
+"@intercom/messenger-js-sdk@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@intercom/messenger-js-sdk@npm:0.0.19"
+  checksum: 10/4c2f1a78d055cd0e7976d975c48cbb51ea051986db318c55727ce749554f07fccc58fedfcd15b751d43848bf08f874b072452c3d2e0e31b0e9d7b5a6158b9e7b
   languageName: node
   linkType: hard
 
