@@ -129,7 +129,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         )}
         <Script
-          src="https://cdn.helpalive.com/sdk/helpalive.js"
+          src="https://cdn.helpalive.com/sdk/next/helpalive.js"
+          data-endpoint="https://api-dev.helpalive.com/api/v1/collect"
+          data-chat-endpoint="https://chat-dev.helpalive.com/api/v1/collect"
           data-api-key="ts_3FZA8N8dYP1L2jrDGTPaLJB1rBT9S9KT"
         />
       </head>
