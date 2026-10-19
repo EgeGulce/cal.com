@@ -18,8 +18,17 @@ function HelpAliveIdentify() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session?.user?.id && (window as any).HelpAlive?.identify) {
-      (window as any).HelpAlive.identify({
+    if (session?.user?.id) {
+      // HelpAlive's queue lines: the session can arrive before the HelpAlive
+      // script has loaded, and identify() then waits in HelpAlive.q until the
+      // script replays it. Checking for HelpAlive first skipped the call, so
+      // the widget stayed hidden until a reload.
+      const w = window as any;
+      w.HelpAlive = w.HelpAlive || { q: [] };
+      ["identify", "reset", "setConsent", "track"].forEach((m) => {
+        if (!w.HelpAlive[m]) w.HelpAlive[m] = (...args: unknown[]) => w.HelpAlive.q.push([m, args]);
+      });
+      w.HelpAlive.identify({
         userId: String(session.user.id),
         tenantId: "cal-com-test",
         tenantName: "Cal.com",
