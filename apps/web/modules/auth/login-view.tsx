@@ -20,6 +20,7 @@ import { Input } from "@coss/ui/components/input";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@coss/ui/components/input-group";
 import { Separator } from "@coss/ui/components/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { resetHelpAlive } from "@lib/helpalive";
 import type { inferSSRProps } from "@lib/types/inferSSRProps";
 import type { getServerSideProps } from "@server/lib/auth/login/getServerSideProps";
 import { Eye, EyeOff } from "lucide-react";
@@ -156,6 +157,12 @@ export default function Login({
   callbackUrl = safeCallbackUrl || "";
 
   const { data, isPending, error } = trpc.viewer.public.ssoConnections.useQuery();
+
+  // Only signed-out visitors reach this page (getServerSideProps sends a session away), so the
+  // HelpAlive person the browser still holds, if any, is no longer here.
+  useEffect(() => {
+    resetHelpAlive();
+  }, []);
 
   useEffect(
     function refactorMeWithoutEffect() {

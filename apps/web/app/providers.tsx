@@ -10,6 +10,7 @@ import { ToastProvider } from "@coss/ui/components/toast";
 import { WebPushProvider } from "@calcom/web/modules/notifications/components/WebPushContext";
 import { NotificationSoundHandler } from "@calcom/web/components/notification-sound-handler";
 
+import { getHelpAlive } from "@lib/helpalive";
 import useIsBookingPage from "@lib/hooks/useIsBookingPage";
 
 import { GeoProvider } from "./GeoContext";
@@ -19,16 +20,7 @@ function HelpAliveIdentify() {
 
   useEffect(() => {
     if (session?.user?.id) {
-      // HelpAlive's queue lines: the session can arrive before the HelpAlive
-      // script has loaded, and identify() then waits in HelpAlive.q until the
-      // script replays it. Checking for HelpAlive first skipped the call, so
-      // the widget stayed hidden until a reload.
-      const w = window as any;
-      w.HelpAlive = w.HelpAlive || { q: [] };
-      ["identify", "reset", "setConsent", "track"].forEach((m) => {
-        if (!w.HelpAlive[m]) w.HelpAlive[m] = (...args: unknown[]) => w.HelpAlive.q.push([m, args]);
-      });
-      w.HelpAlive.identify({
+      getHelpAlive().identify({
         userId: String(session.user.id),
         tenantId: "cal-com-test",
         tenantName: "Cal.com",

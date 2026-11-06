@@ -12,6 +12,8 @@ import { CheckIcon } from "@coss/ui/icons";
 
 import AuthContainer from "@components/ui/AuthContainer";
 
+import { resetHelpAlive } from "@lib/helpalive";
+
 export type PageProps = {
   query: ParsedUrlQuery;
 };
@@ -20,6 +22,11 @@ export function Logout(props: PageProps) {
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const { status } = useSession();
   if (status === "authenticated") signOut({ redirect: false });
+  // Signing out of Cal.com ends the HelpAlive person too. A session still open on arrival
+  // is ended just above, and this runs again once it has gone.
+  useEffect(() => {
+    if (status !== "authenticated") resetHelpAlive();
+  }, [status]);
   const router = useRouter();
   useEffect(() => {
     if (props.query?.survey === "true") {
